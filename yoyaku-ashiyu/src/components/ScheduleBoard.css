@@ -1,0 +1,16 @@
+.line-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+.line-item {
+
+}
+.time-column {
+    width: 20%;
+    max-width: 100px;
+}
+.facility-column {
+    width: 20%;
+}

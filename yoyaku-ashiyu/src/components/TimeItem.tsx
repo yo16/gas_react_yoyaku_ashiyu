@@ -1,12 +1,12 @@
 
-const TimeHeader = (): React.ReactNode => {
+const TimeItem = (): React.ReactNode => {
     return (
         <div
             className="line-item time-column"
         >
-            time header
+            TimeItem
         </div>
     );
 }
 
-export { TimeHeader };
+export { TimeItem };

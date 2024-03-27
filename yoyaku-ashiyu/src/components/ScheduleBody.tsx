@@ -1,15 +1,21 @@
-import { TimeBody } from "./TimeBody";
-import { TargetBody } from "./TargetBody";
+import { ScheduleBodyLine } from "./ScheduleBodyLine";
 
 const ScheduleBody = (): React.ReactNode => {
     return (
-        <>
-            <TimeBody />
-            <TargetBody />
-            <TargetBody />
-            <TargetBody />
-            <TargetBody />
-        </>
+        <div>
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+            <ScheduleBodyLine />
+        </div>
     );
 }
 
