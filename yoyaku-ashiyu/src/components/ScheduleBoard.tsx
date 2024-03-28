@@ -3,11 +3,16 @@ import { ScheduleBody } from "./ScheduleBody";
 
 import "./ScheduleBoard.css";
 
-const ScheduleBoard = (): React.ReactNode => {
+const ScheduleBoard = (props: {timeTable: object[][], isAdmin: boolean}): React.ReactNode => {
+    console.log("ScheduleBoard");
+    console.log(props.timeTable);
     return (
         <>
             <ScheduleHeader />
-            <ScheduleBody />
+            <ScheduleBody
+                timeTable={props.timeTable}
+                isAdmin={props.isAdmin}
+            />
         </>
     );
 }

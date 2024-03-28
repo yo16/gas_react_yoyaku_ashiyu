@@ -1,25 +1,63 @@
+import { useState, useEffect } from 'react';
+
 import './App.css'
-import { formatDtAsMMDD } from './common/dateTool';
+import { formatDtAsMMDD, formatDtAsyyyymmdd } from './common/dateTool';
 import { ScheduleBoard } from './components/ScheduleBoard';
 import { GASClient } from 'gas-client';
 
 const { serverFunctions } = new GASClient();
 
+/* eslint @typescript-eslint/no-unused-vars: 0 */
+
 function App() {
-  const handleTest = () => {
+  const [curDatesTimeTable, setCurDatesTimeTable] = useState<object[][]>([]);
+  const [curDate, setCurDate] = useState<Date>(new Date());
+  const [isAdmin] = useState<boolean>(true);
+
+  // スプレッドシートから、今日の予約状況を取得
+  useEffect(() => {
     serverFunctions
-      .editSheet()
-      .then((res: unknown) => console.log(res))
-      .catch((err: unknown) => console.error(err) )
+      .getBookingInfo(
+        curDate.getFullYear(),
+        curDate.getMonth() + 1,
+        curDate.getDate()
+      )
+      .then((res: object[][]) => {
+        displayBookingInfo(res);
+      })
+      .catch((err: unknown) => {
+        console.error(err);
+      })
     ;
-  };
+  }, [curDate]);
+
+  const displayBookingInfo = (values: object[][]) => {
+    console.log({values});
+    setCurDatesTimeTable(values);
+  }
+
+  //const handleTest = () => {
+  //  serverFunctions
+  //    .getMonthlySeet(2024,3)
+  //    .then((res: unknown) => console.log(res))
+  //    .catch((err: unknown) => console.error(err) )
+  //  ;
+  //};
 
   return (
     <>
       <h1>シャワー予約</h1>
       <h2>今日は{ formatDtAsMMDD(new Date) }</h2>
-      <button onClick={handleTest}>テスト</button>
-      <ScheduleBoard />
+      {/* <button onClick={handleTest}>テスト</button> */}
+      <input
+        type="date"
+        value={formatDtAsyyyymmdd(curDate, '-')}
+        onChange={e => setCurDate(new Date(e.target.value))}
+      />
+      <ScheduleBoard
+        timeTable={curDatesTimeTable}
+        isAdmin={isAdmin}
+      />
     </>
   );
 }
