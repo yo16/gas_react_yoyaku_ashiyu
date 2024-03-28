@@ -2,7 +2,7 @@
 const FacilityItem = (): React.ReactNode => {
     return (
         <div
-            className="line-item facility-column"
+            className="line-item body-item facility-column"
         >
             Facility item
         </div>

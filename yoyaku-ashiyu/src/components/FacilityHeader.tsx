@@ -4,7 +4,7 @@ const TargetHeader = (
 ): React.ReactNode => {
     return (
         <div
-            className="line-item facility-column"
+            className="line-item header-item facility-column"
         >
             Target header { props.targetName }
         </div>

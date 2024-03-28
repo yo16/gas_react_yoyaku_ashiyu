@@ -2,7 +2,7 @@
 const TimeItem = (): React.ReactNode => {
     return (
         <div
-            className="line-item time-column"
+            className="line-item body-item time-column"
         >
             TimeItem
         </div>

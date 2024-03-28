@@ -1,16 +1,36 @@
+/* itemsの１行のクラス */
 .line-items {
     display: flex;
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
 }
-.line-item {
-
+/* ボディの１行のクラス */
+.body-line-items:nth-child(2n+1) div {
+    background-color: #e8edf0;
 }
+.body-line-items:nth-child(2n) div {
+    background-color: #d6dbde;
+}
+/* 全item共通 */
+.line-item {
+    border: 1px solid #999;
+    padding: 2px;
+}
+/* ヘッダーitem共通 */
+.header-item {
+    background-color: #ccf;
+}
+/* ボディitem共通 */
+.body-item {
+    color: #666;
+}
+/* time列item共通 */
 .time-column {
     width: 20%;
     max-width: 100px;
 }
+/* facility列item共通 */
 .facility-column {
     width: 20%;
 }

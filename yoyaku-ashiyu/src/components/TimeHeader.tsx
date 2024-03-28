@@ -2,7 +2,7 @@
 const TimeHeader = (): React.ReactNode => {
     return (
         <div
-            className="line-item time-column"
+            className="line-item header-item time-column"
         >
             time header
         </div>
