@@ -115,11 +115,25 @@ function getMonthlySeet(year: number, month: number) {
     });
   }
 
+  // 日ごとの罫線
+  for (let d=0; d<daysCount; d++) {  // １日目の上から
+    const firstTimeRow = 4 + d * timetableCount;
+    sh.getRange(firstTimeRow, 1, 1, 2 + facilityCount * 3)
+      .setBorder(true, null, null, null, null, null);
+  }
+  // Facilityごとの罫線
+  for (let f=0; f<facilityCount; f++) {
+    const firstCol = 3 + f * 3;
+    sh.getRange(2, firstCol, 2 + daysCount * timetableCount, 1)
+      .setBorder(null, true, null, null, null, null);
+  }
+
   return sh;
 }
 
 // -----------
-// hhdd形式の文字列を、hh:dd～に変える
+// hhdd形式の文字列を、hh:ddに変える
+
 function formatTime2Str(tm: string) {
-  return `${tm.substring(0,2)}:${tm.substring(2)}～`;
+  return `${tm.substring(0,2)}:${tm.substring(2)}`;
 }
