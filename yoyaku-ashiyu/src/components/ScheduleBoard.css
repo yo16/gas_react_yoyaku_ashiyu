@@ -20,7 +20,7 @@
 }
 /* ヘッダーitem共通 */
 .header-item {
-    background-color: #ccf;
+    background-color: #90cbef;
     text-align: center;
     font-weight: bold;
 }
@@ -42,4 +42,7 @@
 /* facility列item共通 */
 .facility-column {
     width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
