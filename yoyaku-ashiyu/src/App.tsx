@@ -67,6 +67,8 @@ function App() {
           phoneNumber
         )
         .then((res: boolean) => {
+          // 予約完了
+          handleSetTableDate(targetDate);
           if (res) {
             setMessages(
               [
@@ -91,7 +93,6 @@ function App() {
 
   const handleOnCloseMessageDialog = () => {
     setOpenMessageDialog(false);
-    handleSetTableDate(curDate);
   }
 
   return (

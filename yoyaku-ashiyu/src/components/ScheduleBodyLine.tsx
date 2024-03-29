@@ -41,6 +41,7 @@ const ScheduleBodyLine: React.FC<Props> = (props): React.ReactNode => {
                         isAdmin={props.isAdmin}
                         curDate={props.curDate}
                         bookingTime={props.rowData[1]}
+                        facilityIndex={i}
                         onSubmit={handleOnSubmit}
                     />
                 )}

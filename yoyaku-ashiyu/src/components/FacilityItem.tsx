@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BookButton } from "./BookButton";
 import { BookingDialog } from "./BookingDialog";
+import { FASILITIES } from "./ScheduleHeader";
 
 export type FacilityItemInfo = {
     index: number;
@@ -14,6 +15,7 @@ interface Props {
     isAdmin: boolean;
     curDate: Date;
     bookingTime: string;
+    facilityIndex: number;
     onSubmit: (facilityIndex: number, userName: string, phoneNumber: string) => void;
 }
 
@@ -61,6 +63,7 @@ const FacilityItem: React.FC<Props> = (props): React.ReactNode => {
                 onClose={handleOnClose}
                 bookingDate={props.curDate}
                 bookingTime={props.bookingTime}
+                facilityName={FASILITIES[props.facilityIndex]}
                 onSubmit={handleOnSubmit}
             />
         </>
