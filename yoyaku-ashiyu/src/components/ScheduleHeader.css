@@ -1,7 +1,41 @@
+.divPageHeader {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
 .schedule-header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     width: 100%;
     margin: 0 auto;
+}
+
+.curDtCtrl {
+    background-color: #fff;
+}
+
+.iptCalender {
+    font-size: x-large;
+    border: 1px solid #666;
+    border-radius: 5px;
+    padding: 0px 5px;
+}
+.iptCalender:hover {
+    background-color: #eec;
+}
+
+.linkChangeDt span {
+    font-size: 40px;
+}
+
+.linkChangeDt, .iptCalender {
+    cursor: pointer;
+}
+.linkChangeDt {
+    color: #333;
+}
+.linkChangeDt:hover {
+    background-color: #eec;
 }

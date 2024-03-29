@@ -3,12 +3,20 @@ import { ScheduleBody } from "./ScheduleBody";
 
 import "./ScheduleBoard.css";
 
-const ScheduleBoard = (props: {timeTable: object[][], isAdmin: boolean}): React.ReactNode => {
-    console.log("ScheduleBoard");
-    console.log(props.timeTable);
+interface Props {
+    timeTable: string[][];
+    isAdmin: boolean;
+    curDate: Date;
+    setTableDate: (dt: Date) => void;
+}
+
+const ScheduleBoard: React.FC<Props> = (props) => {
     return (
         <div>
-            <ScheduleHeader />
+            <ScheduleHeader
+                curDate={props.curDate}
+                setTableDate={props.setTableDate}
+            />
             <ScheduleBody
                 timeTable={props.timeTable}
                 isAdmin={props.isAdmin}

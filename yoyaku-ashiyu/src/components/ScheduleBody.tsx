@@ -1,8 +1,6 @@
 import { ScheduleBodyLine } from "./ScheduleBodyLine";
 
-const ScheduleBody = (props: {timeTable: object[][], isAdmin: boolean}): React.ReactNode => {
-    console.log("ScheduleBody");
-    console.log(props.timeTable);
+const ScheduleBody = (props: {timeTable: string[][], isAdmin: boolean}): React.ReactNode => {
     if (!props.timeTable) {return <></>;}
     return (
         <div>
