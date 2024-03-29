@@ -1,5 +1,5 @@
 import { TimeHeader } from "./TimeHeader";
-import { TargetHeader } from "./FacilityHeader";
+import { FacilityHeader } from "./FacilityHeader";
 
 import "./ScheduleHeader.css";
 
@@ -9,10 +9,12 @@ const ScheduleHeader = (): React.ReactNode => {
             className="schedule-header line-items"
         >
             <TimeHeader />
-            <TargetHeader targetName="A" />
-            <TargetHeader targetName="B" />
-            <TargetHeader targetName="C" />
-            <TargetHeader targetName="D" />
+            <div className="facility-columns">
+                <FacilityHeader targetName="A" />
+                <FacilityHeader targetName="B" />
+                <FacilityHeader targetName="C" />
+                <FacilityHeader targetName="D" />
+            </div>
         </div>
     );
 }

@@ -2,35 +2,44 @@
 .line-items {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin: 0;
     padding: 0;
 }
 /* ボディの１行のクラス */
-.body-line-items:nth-child(2n+1) div {
+.body-line-items:nth-child(2n+1)>div {
     background-color: #e8edf0;
 }
-.body-line-items:nth-child(2n) div {
+.body-line-items:nth-child(2n)>div {
     background-color: #d6dbde;
 }
 /* 全item共通 */
 .line-item {
     border: 1px solid #999;
-    padding: 2px;
+    padding: 5px;
 }
 /* ヘッダーitem共通 */
 .header-item {
     background-color: #ccf;
+    text-align: center;
+    font-weight: bold;
 }
 /* ボディitem共通 */
 .body-item {
     color: #666;
+    text-align: center;
+}
+/* 施設列を束ねたdiv */
+.facility-columns {
+    display: flex;
+    width: calc(100% - 80px);
 }
 /* time列item共通 */
 .time-column {
-    width: 20%;
-    max-width: 100px;
+    width: 80px;
+    text-align: center;
 }
 /* facility列item共通 */
 .facility-column {
-    width: 20%;
+    width: 25%;
 }

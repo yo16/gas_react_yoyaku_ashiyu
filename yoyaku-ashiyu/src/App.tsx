@@ -47,12 +47,15 @@ function App() {
   return (
     <>
       <h1>シャワー予約</h1>
-      <h2>今日は{ formatDtAsMMDD(new Date) }</h2>
+      <div>今日は{ formatDtAsMMDD(new Date) }</div>
+      <hr />
+      <h1>予約状況</h1>
       {/* <button onClick={handleTest}>テスト</button> */}
       <input
         type="date"
         value={formatDtAsyyyymmdd(curDate, '-')}
         onChange={e => setCurDate(new Date(e.target.value))}
+        className="iptCalender"
       />
       <ScheduleBoard
         timeTable={curDatesTimeTable}

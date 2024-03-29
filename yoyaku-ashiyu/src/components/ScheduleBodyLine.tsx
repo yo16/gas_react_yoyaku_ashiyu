@@ -2,8 +2,6 @@ import { TimeItem } from "./TimeItem";
 import { FacilityItem, FacilityItemInfo } from "./FacilityItem";
 
 const ScheduleBodyLine = (props: {rowData: unknown[], isAdmin: boolean}): React.ReactNode => {
-    console.log("ScheduleBodyLine");
-    console.log(props.rowData);
     // facilityの数を配列から計算する （１施設ごとに３列）
     const facilityCount = Math.floor((props.rowData.length - 2) / 3);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,20 +14,21 @@ const ScheduleBodyLine = (props: {rowData: unknown[], isAdmin: boolean}): React.
             };
         }
     );
-    console.log({facilities});
 
     return (
         <div className="line-items body-line-items">
             <TimeItem
                 time={props.rowData[1] as string}
             />
-            {facilities.map((f, i) => 
-                <FacilityItem
-                    key={`fi_${i}`}
-                    info={f}
-                    isAdmin={props.isAdmin}
-                />
-            )}
+            <div className="facility-columns">
+                {facilities.map((f, i) => 
+                    <FacilityItem
+                        key={`fi_${i}`}
+                        info={f}
+                        isAdmin={props.isAdmin}
+                    />
+                )}
+            </div>
         </div>
     );
 }

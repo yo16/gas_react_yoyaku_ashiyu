@@ -1,14 +1,14 @@
 
-const TargetHeader = (
+const FacilityHeader = (
     props: {targetName: string}
 ): React.ReactNode => {
     return (
         <div
             className="line-item header-item facility-column"
         >
-            Target header { props.targetName }
+            { props.targetName }
         </div>
     );
 }
 
-export { TargetHeader };
+export { FacilityHeader };

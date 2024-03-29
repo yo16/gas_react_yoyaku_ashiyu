@@ -1,3 +1,4 @@
+import { BookButton } from "./BookButton";
 
 export type FacilityItemInfo = {
     userName: string;
@@ -6,12 +7,23 @@ export type FacilityItemInfo = {
 }
 
 const FacilityItem = (props: {info: FacilityItemInfo, isAdmin: boolean}): React.ReactNode => {
-    const dispItem = props.isAdmin
-        ? (
-            props.info.userName
-        )
-        : <span className="material-symbols-outlined">close</span>
+    const handleOnClick = () => {
+        console.log("clicked!");
+    };
+
+    const dispItem = (props.info.userName === "")
+        ? <BookButton onClick={handleOnClick} />
+        : props.isAdmin
+            ? (
+                <div>
+                    <div>{props.info.userName}</div>
+                    <div>{props.info.telNumber}</div>
+                    <div>{props.info.memo}</div>
+                </div>
+            )
+            : <span className="material-symbols-outlined">close</span>
     ;
+
     return (
         <div
             className="line-item body-item facility-column"

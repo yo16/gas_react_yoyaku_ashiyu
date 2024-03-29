@@ -4,7 +4,7 @@ const TimeHeader = (): React.ReactNode => {
         <div
             className="line-item header-item time-column"
         >
-            time header
+            時刻
         </div>
     );
 }

@@ -7,13 +7,13 @@ const ScheduleBoard = (props: {timeTable: object[][], isAdmin: boolean}): React.
     console.log("ScheduleBoard");
     console.log(props.timeTable);
     return (
-        <>
+        <div>
             <ScheduleHeader />
             <ScheduleBody
                 timeTable={props.timeTable}
                 isAdmin={props.isAdmin}
             />
-        </>
+        </div>
     );
 }
 
