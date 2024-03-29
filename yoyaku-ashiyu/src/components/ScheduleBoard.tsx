@@ -8,9 +8,33 @@ interface Props {
     isAdmin: boolean;
     curDate: Date;
     setTableDate: (dt: Date) => void;
+    onSubmit: (
+        targetDate: Date,
+        timeStr: string,
+        facilityIndex: number,
+        userName: string,
+        phoneNumber: string
+    ) => void;
 }
 
-const ScheduleBoard: React.FC<Props> = (props) => {
+const ScheduleBoard: React.FC<Props> = (props): React.ReactNode => {
+    const handleOnSubmit = (
+        targetDate: Date,
+        timeStr: string,
+        facilityIndex: number,
+        userName: string,
+        phoneNumber: string
+    ): void => {
+        // 予約実行
+        props.onSubmit(
+            targetDate,
+            timeStr,
+            facilityIndex,
+            userName,
+            phoneNumber
+        );
+    }
+
     return (
         <div>
             <ScheduleHeader
@@ -20,6 +44,8 @@ const ScheduleBoard: React.FC<Props> = (props) => {
             <ScheduleBody
                 timeTable={props.timeTable}
                 isAdmin={props.isAdmin}
+                curDate={props.curDate}
+                onSubmit={handleOnSubmit}
             />
         </div>
     );

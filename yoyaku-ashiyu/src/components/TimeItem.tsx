@@ -1,9 +1,9 @@
+import { formatTimeForDisp } from "../common/dateTool";
 
+// timeは、hh:mm 形式で入っている前提
 const TimeItem = (props: {time: string}): React.ReactNode => {
-    const timeStr = `0${props.time}`.slice(-5);
-    const h = Number(timeStr.substring(0, 2));
-    const m = timeStr.substring(3,5);
-    const hm = `${h}:${m}～`;
+    // hh:mm を h:mm～ へ変換
+    const hm = formatTimeForDisp(props.time);
 
     return (
         <div

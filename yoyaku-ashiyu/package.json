@@ -11,7 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@google/clasp": "^2.4.2",
+    "@mui/material": "^5.15.14",
     "@types/google-apps-script": "^1.0.82",
     "autoprefixer": "^10.4.19",
     "gas-client": "^1.1.1",

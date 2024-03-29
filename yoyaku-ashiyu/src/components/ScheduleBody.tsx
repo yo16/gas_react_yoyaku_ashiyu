@@ -1,6 +1,24 @@
 import { ScheduleBodyLine } from "./ScheduleBodyLine";
 
-const ScheduleBody = (props: {timeTable: string[][], isAdmin: boolean}): React.ReactNode => {
+interface Props {
+    timeTable: string[][];
+    isAdmin: boolean;
+    curDate: Date;
+    onSubmit: (
+        targetDate: Date,
+        timeStr: string,
+        facilityIndex: number,
+        userName: string,
+        phoneNumber: string
+    ) => void;
+}
+
+const ScheduleBody: React.FC<Props> = (props): React.ReactNode => {
+    const handleOnSubmit = (timeStr: string, facilityIndex: number, userName: string, phoneNumber: string): void => {
+        // 予約実行
+        props.onSubmit(props.curDate, timeStr, facilityIndex, userName, phoneNumber);
+    }
+
     if (!props.timeTable) {return <></>;}
     return (
         <div>
@@ -10,6 +28,8 @@ const ScheduleBody = (props: {timeTable: string[][], isAdmin: boolean}): React.R
                         key={`sbl_${i}`}
                         rowData={row}
                         isAdmin={props.isAdmin}
+                        curDate={props.curDate}
+                        onSubmit={handleOnSubmit}
                     />
                 )
             }

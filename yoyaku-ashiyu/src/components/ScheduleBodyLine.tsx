@@ -1,24 +1,37 @@
 import { TimeItem } from "./TimeItem";
 import { FacilityItem, FacilityItemInfo } from "./FacilityItem";
 
-const ScheduleBodyLine = (props: {rowData: unknown[], isAdmin: boolean}): React.ReactNode => {
+interface Props {
+    rowData: string[];
+    isAdmin: boolean;
+    curDate: Date;
+    onSubmit: (timeStr: string, facilityIndex: number, userName: string, phoneNumber: string) => void;
+}
+
+const ScheduleBodyLine: React.FC<Props> = (props): React.ReactNode => {
     // facilityの数を配列から計算する （１施設ごとに３列）
     const facilityCount = Math.floor((props.rowData.length - 2) / 3);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const facilities: FacilityItemInfo[] = [...Array(facilityCount)].map(
         (_, i): FacilityItemInfo => {
             return {
-                userName: props.rowData[2 + i*3] as string,
-                telNumber: props.rowData[2 + i*3 + 1] as string,
-                memo: props.rowData[2 + i*3 + 2] as string,
+                index: i,
+                userName: props.rowData[2 + i*3],
+                phoneNumber: props.rowData[2 + i*3 + 1],
+                memo: props.rowData[2 + i*3 + 2],
             };
         }
     );
 
+    const handleOnSubmit = (facilityIndex: number, userName: string, phoneNumber: string): void => {
+        // 予約実行
+        props.onSubmit(props.rowData[1], facilityIndex, userName, phoneNumber);
+    }
+
     return (
         <div className="line-items body-line-items">
             <TimeItem
-                time={props.rowData[1] as string}
+                time={props.rowData[1]}
             />
             <div className="facility-columns">
                 {facilities.map((f, i) => 
@@ -26,6 +39,9 @@ const ScheduleBodyLine = (props: {rowData: unknown[], isAdmin: boolean}): React.
                         key={`fi_${i}`}
                         info={f}
                         isAdmin={props.isAdmin}
+                        curDate={props.curDate}
+                        bookingTime={props.rowData[1]}
+                        onSubmit={handleOnSubmit}
                     />
                 )}
             </div>

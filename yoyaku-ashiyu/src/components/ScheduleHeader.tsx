@@ -5,6 +5,8 @@ import { FacilityHeader } from "./FacilityHeader";
 
 import "./ScheduleHeader.css";
 
+const FASILITIES = ['A', 'B', 'C', 'D'];
+
 interface Props {
     curDate: Date;
     setTableDate: (dt: Date) => void;
@@ -58,10 +60,10 @@ const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
             >
                 <TimeHeader />
                 <div className="facility-columns">
-                    <FacilityHeader targetName="A" />
-                    <FacilityHeader targetName="B" />
-                    <FacilityHeader targetName="C" />
-                    <FacilityHeader targetName="D" />
+                    {FASILITIES.map((f, i) => <FacilityHeader
+                        key={`fh_${i}`}
+                        targetName={f}
+                    />)}
                 </div>
             </div>
         </div>
@@ -69,4 +71,7 @@ const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
     );
 }
 
-export { ScheduleHeader };
+export {
+    ScheduleHeader,
+    FASILITIES,
+};

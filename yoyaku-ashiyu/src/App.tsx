@@ -1,8 +1,12 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 
 import './App.css'
 import { ScheduleBoard } from './components/ScheduleBoard';
 import { GASClient } from 'gas-client';
+
+import { formatDtAsMMDD, formatTimeForDispFromTo } from './common/dateTool';
+import { MessageDialog } from './components/MessageDialog';
+import { FASILITIES } from './components/ScheduleHeader';
 
 const { serverFunctions } = new GASClient();
 
@@ -12,6 +16,8 @@ function App() {
   const [curDatesTimeTable, setCurDatesTimeTable] = useState<string[][]>([]);
   const [curDate, setCurDate] = useState<Date>(new Date());
   const [isAdmin] = useState<boolean>(true);
+  const [messages, setMessages] = useState<string[]>([]);
+  const [openMessageDialog, setOpenMessageDialog] = useState<boolean>(false);
 
   const displayBookingInfo = (values: string[][]) => {
     setCurDatesTimeTable(values);
@@ -33,12 +39,59 @@ function App() {
       )
       .then((res: string[][]) => {
         displayBookingInfo(res);
-        setCurDate(() => newDate);
+        setCurDate(newDate);
       })
       .catch((err: unknown) => {
         console.error(err);
       })
     ;
+  }
+
+  // 予約登録
+  const handleOnSubmit = (
+    targetDate: Date,
+    timeStr: string,
+    facilityIndex: number,
+    userName: string,
+    phoneNumber: string
+  ): void => {
+      // 予約実行
+      serverFunctions
+        .makeABooking(
+          targetDate.getFullYear(),
+          targetDate.getMonth() + 1,
+          targetDate.getDate(),
+          timeStr,
+          facilityIndex,
+          userName,
+          phoneNumber
+        )
+        .then((res: boolean) => {
+          if (res) {
+            setMessages(
+              [
+                `${userName} 様`,
+                `【日時】 ${formatDtAsMMDD(targetDate)} ${formatTimeForDispFromTo(timeStr)}`,
+                `【設備】 ${FASILITIES[facilityIndex]}`,
+              ]
+            );
+          }
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+        })
+      ;
+  }
+
+  useEffect(() => {
+    if (messages.length > 0) {
+        setOpenMessageDialog(true);
+    }
+  }, [messages]);
+
+  const handleOnCloseMessageDialog = () => {
+    setOpenMessageDialog(false);
+    handleSetTableDate(curDate);
   }
 
   return (
@@ -48,6 +101,12 @@ function App() {
         isAdmin={isAdmin}
         curDate={curDate}
         setTableDate={handleSetTableDate}
+        onSubmit={handleOnSubmit}
+      />
+      <MessageDialog
+        messages={messages}
+        open={openMessageDialog}
+        onClose={handleOnCloseMessageDialog}
       />
     </>
   );

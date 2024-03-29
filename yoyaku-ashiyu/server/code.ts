@@ -131,6 +131,37 @@ function getMonthlySeet(year: number, month: number) {
   return sh;
 }
 
+// 予約実行
+// timeは、hh:mm
+export function makeABooking(
+  year: number,
+  month: number,
+  date: number,
+  time: string,
+  facilityIndex: number,
+  userName: string,
+  phoneNumber: string
+): boolean {
+  // シートを取得
+  const sh = getMonthlySeet(year, month);
+
+  const timetableCount = TIMETABLE.length;
+  const fristTimeRow = 4 + (date - 1) * timetableCount;
+  const targetRow = fristTimeRow + getTimeIndex(time);
+  sh.getRange(targetRow, 3 + facilityIndex * 3).setValue(userName);
+  sh.getRange(targetRow, 3 + facilityIndex * 3 + 1).setValue(phoneNumber);
+
+  return true;
+}
+
+// hh:mmの時刻のindexを取得
+function getTimeIndex(tm: string): number {
+  // コロンを消して、念のため前ゼロ
+  const hhmm = ('0' + tm.replace(':','')).slice(-4);
+
+  return TIMETABLE.indexOf(hhmm);
+}
+
 // -----------
 // hhdd形式の文字列を、hh:ddに変える
 
