@@ -10,13 +10,13 @@
 }
 .btnBooking:hover {
     background-color: #aa0;
-    position: relatiive;
+    position: relative;
     top: 2px;
     box-shadow: 2px 3px 0px #999;
 }
 .btnBooking:active {
     background-color: #990;
-    position: retalive;
+    position: relative;
     top: 5px;
     box-shadow: none;
 }
