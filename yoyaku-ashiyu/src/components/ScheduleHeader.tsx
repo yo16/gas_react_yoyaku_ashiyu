@@ -13,13 +13,22 @@ interface Props {
 }
 
 const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
+    const handleOnClickTitle = () => {
+        props.setTableDate(new Date());
+    };
+
     return (
         <div
             className="schedule-header"
         >
             <div className="divPageHeader">
-                <div className="h1">シャワー予約</div>
-                <div>今日は{ formatDtAsMMDD(new Date()) }</div>
+                <div
+                    className="h1"
+                    onClick={handleOnClickTitle}
+                >シャワー予約</div>
+                <div
+                    onClick={handleOnClickTitle}
+                >今日は{ formatDtAsMMDD(new Date()) }</div>
             </div>
 
             <hr />
