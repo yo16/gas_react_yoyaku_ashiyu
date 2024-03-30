@@ -15,7 +15,7 @@ const { serverFunctions } = new GASClient();
 function App() {
   const [curDatesTimeTable, setCurDatesTimeTable] = useState<string[][]>([]);
   const [curDate, setCurDate] = useState<Date>(new Date());
-  const [isAdmin] = useState<boolean>(true);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [openMessageDialog, setOpenMessageDialog] = useState<boolean>(false);
 
@@ -95,6 +95,22 @@ function App() {
     setOpenMessageDialog(false);
   }
 
+  const handleOnInputAdminPass = (adminPassword: string): void => {
+    serverFunctions
+      .isValidAdmin(adminPassword)
+      .then((isValidAdmin: boolean) => {
+        if (isValidAdmin) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      })
+      .catch((err: unknown) => {
+        console.error(err);
+      })
+    ;
+  }
+
   return (
     <>
       <ScheduleBoard
@@ -103,6 +119,7 @@ function App() {
         curDate={curDate}
         setTableDate={handleSetTableDate}
         onSubmit={handleOnSubmit}
+        onInputAdminPass={handleOnInputAdminPass}
       />
       <MessageDialog
         messages={messages}

@@ -1,5 +1,6 @@
 const props = PropertiesService.getScriptProperties();
 const SHEET_ID: string | null = props.getProperty('ss_id');
+const ADMIN_PASSWORD: string | null = props.getProperty('admin_password');
 
 const FASILITIES = ['A', 'B', 'C', 'D'];
 const TIMETABLE: string[] = [
@@ -161,6 +162,14 @@ function getTimeIndex(tm: string): number {
 
   return TIMETABLE.indexOf(hhmm);
 }
+
+// 管理者の確認
+export function isValidAdmin(adminPassword: string): boolean {
+  if (!ADMIN_PASSWORD) return false;
+
+  return (adminPassword === ADMIN_PASSWORD );
+}
+
 
 // -----------
 // hhdd形式の文字列を、hh:ddに変える
