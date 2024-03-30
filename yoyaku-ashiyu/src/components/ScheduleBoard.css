@@ -38,6 +38,7 @@
 .time-column {
     width: 80px;
     text-align: center;
+    font-weight: bold;
 }
 /* facility列item共通 */
 .facility-column {
