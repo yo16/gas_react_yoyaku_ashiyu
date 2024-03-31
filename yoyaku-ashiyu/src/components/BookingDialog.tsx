@@ -1,5 +1,6 @@
 // 参考
 // https://mui.com/material-ui/react-dialog/
+import { useCookies } from 'react-cookie';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { formatDtAsMMDD, formatTimeForDispFromTo } from "../common/dateTool";
+import {COOKIE_USERNAME, COOKIE_PHONENUMBER } from "../App";
 
 interface Props {
     bookingDate: Date;
@@ -20,12 +22,21 @@ interface Props {
 }
 
 const BookingDialog: React.FC<Props> = (props) => {
+    const [cookies] = useCookies([COOKIE_USERNAME, COOKIE_PHONENUMBER]);
+
     const handleOnClose = () => {
         props.onClose();
     }
     const handleOnSubmit = (un: string, pn: string) => {
         props.onSubmit(un, pn);
     }
+
+    const defaultUserName = cookies[COOKIE_USERNAME]
+        ? cookies[COOKIE_USERNAME]
+        : "";
+    const defaultPhoneNumber = cookies[COOKIE_PHONENUMBER]
+        ? cookies[COOKIE_PHONENUMBER]
+        : "";
 
     return (
         <>
@@ -59,6 +70,7 @@ const BookingDialog: React.FC<Props> = (props) => {
                         type="text"
                         fullWidth
                         variant="outlined"
+                        defaultValue={defaultUserName}
                     />
                     <TextField
                         required
@@ -69,6 +81,7 @@ const BookingDialog: React.FC<Props> = (props) => {
                         type="text"
                         fullWidth
                         variant="outlined"
+                        defaultValue={defaultPhoneNumber}
                     />
                 </DialogContent>
                 <DialogActions>

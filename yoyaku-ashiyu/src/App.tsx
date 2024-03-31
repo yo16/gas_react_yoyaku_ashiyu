@@ -3,10 +3,14 @@ import { useState, useEffect, useLayoutEffect } from 'react';
 import './App.css'
 import { ScheduleBoard } from './components/ScheduleBoard';
 import { GASClient } from 'gas-client';
+import { useCookies } from 'react-cookie';
 
 import { formatDtAsMMDD, formatTimeForDispFromTo } from './common/dateTool';
 import { MessageDialog } from './components/MessageDialog';
 import { FASILITIES } from './components/ScheduleHeader';
+
+export const COOKIE_USERNAME = "SHOWER_RESERVE_USERNAME";
+export const COOKIE_PHONENUMBER = "SHOWER_RESERVE_PHONENUMBER";
 
 const { serverFunctions } = new GASClient();
 
@@ -18,6 +22,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [openMessageDialog, setOpenMessageDialog] = useState<boolean>(false);
+  const [_cookies, setCookie] = useCookies();
 
   const displayBookingInfo = (values: string[][]) => {
     setCurDatesTimeTable(values);
@@ -70,6 +75,26 @@ function App() {
           // 予約完了
           handleSetTableDate(targetDate);
           if (res) {
+            // クッキー更新
+            const options = {
+              path: '/',
+              maxAge: 30 * 24 * 60 * 60,   // 30日
+              //domain: 'script.google.com',
+              secure: true,
+              sameSite: "none" as 'none',
+            }
+            setCookie(
+              COOKIE_USERNAME,
+              userName,
+              options
+            );
+            setCookie(
+              COOKIE_PHONENUMBER,
+              phoneNumber,
+              options,
+            );
+
+            // 完了メッセージ表示
             setMessages(
               [
                 `${userName} 様`,
