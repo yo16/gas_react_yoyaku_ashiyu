@@ -1,23 +1,50 @@
 .btnBooking {
-    color: #000;
-    background-color: #ee3;
     padding: 1rem;
-    border: 2px solid #333;
+    border: 2px solid;
     border-radius: 5px;
     box-shadow: 2px 5px 0px #999;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 .btnBooking:hover {
-    background-color: #aa0;
     position: relative;
     top: 2px;
     box-shadow: 2px 3px 0px #999;
 }
 .btnBooking:active {
-    background-color: #990;
     position: relative;
     top: 5px;
     box-shadow: none;
 }
 
+/* 登録ボタン */
+.btnBoookEntry {
+    background-color: #ee3;
+    color: #000;
+    border-color: #333;
+}
+.btnBoookEntry:hover {
+    background-color: #aa0;
+}
+.btnBoookEntry:active {
+    background-color: #990;
+}
+
+/* 編集ボタン */
+.btnBookEdit {
+    background-color: #66e;
+    color: #fff;
+    border-color: #333;
+
+}
+.btnBookEdit:hover {
+    background-color: #1a73e8;
+}
+.btnBookEdit:active {
+    background-color: #009;
+}
+
+.spnDoBooked {
+    color: #cca;
+    font-size: smaller;
+}
