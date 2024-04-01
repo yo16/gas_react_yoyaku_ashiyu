@@ -20,6 +20,7 @@ function App() {
   const [curDatesTimeTable, setCurDatesTimeTable] = useState<string[][]>([]);
   const [curDate, setCurDate] = useState<Date>(new Date());
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [messageTitle, setMessageTitle] = useState<string>("");
   const [messages, setMessages] = useState<string[]>([]);
   const [openMessageDialog, setOpenMessageDialog] = useState<boolean>(false);
   const [_cookies, setCookie] = useCookies();
@@ -75,29 +76,73 @@ function App() {
           // 予約完了
           handleSetTableDate(targetDate);
           if (res) {
-            // クッキー更新
-            const options = {
-              path: '/',
-              maxAge: 30 * 24 * 60 * 60,   // 30日
-              //domain: 'script.google.com',
-              secure: true,
-              sameSite: "none" as 'none',
+            // 管理者以外の場合は、クッキーを作る
+            if (!isAdmin) {
+              // クッキー更新
+              const options = {
+                path: '/',
+                maxAge: 30 * 24 * 60 * 60,   // 30日
+                //domain: 'script.google.com',
+                secure: true,
+                sameSite: "none" as 'none',
+              }
+              setCookie(
+                COOKIE_USERNAME,
+                userName,
+                options
+              );
+              setCookie(
+                COOKIE_PHONENUMBER,
+                phoneNumber,
+                options,
+              );
             }
-            setCookie(
-              COOKIE_USERNAME,
-              userName,
-              options
-            );
-            setCookie(
-              COOKIE_PHONENUMBER,
-              phoneNumber,
-              options,
-            );
 
             // 完了メッセージ表示
+            setMessageTitle(
+              "予約を完了しました"
+            )
             setMessages(
               [
                 `${userName} 様`,
+                `【日時】 ${formatDtAsMMDD(targetDate)} ${formatTimeForDispFromTo(timeStr)}`,
+                `【設備】 ${FASILITIES[facilityIndex]}`,
+              ]
+            );
+          }
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+        })
+      ;
+  }
+
+  // 予約取り消し
+  const handleOnSubmitCancel = (
+    targetDate: Date,
+    timeStr: string,
+    facilityIndex: number
+  ): void => {
+      // 取り消し実行
+      serverFunctions
+        .cancelABooking(
+          targetDate.getFullYear(),
+          targetDate.getMonth() + 1,
+          targetDate.getDate(),
+          timeStr,
+          facilityIndex
+        )
+        .then((res: boolean) => {
+          // 予約完了
+          handleSetTableDate(targetDate);
+          if (res) {
+            // 完了メッセージ表示
+            setMessageTitle(
+              "予約を取り消しました"
+            )
+            setMessages(
+              [
+                '下記の予約を取り消しました。',
                 `【日時】 ${formatDtAsMMDD(targetDate)} ${formatTimeForDispFromTo(timeStr)}`,
                 `【設備】 ${FASILITIES[facilityIndex]}`,
               ]
@@ -144,9 +189,11 @@ function App() {
         curDate={curDate}
         setTableDate={handleSetTableDate}
         onSubmit={handleOnSubmit}
+        onSubmitCancel={handleOnSubmitCancel}
         onInputAdminPass={handleOnInputAdminPass}
       />
       <MessageDialog
+        messageTitle={messageTitle}
         messages={messages}
         open={openMessageDialog}
         onClose={handleOnCloseMessageDialog}

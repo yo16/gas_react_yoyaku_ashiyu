@@ -19,12 +19,18 @@ interface Props {
         userName: string,
         phoneNumber: string
     ) => void;
+    onSubmitCancel: (
+        targetDate: Date,
+        timeStr: string,
+        facilityIndex: number
+    ) => void;
     onInputAdminPass: (adminPassword: string) => void;
 }
 
 const ScheduleBoard: React.FC<Props> = (props): React.ReactNode => {
     const [openAdminPassDialog, setOpenAdinPassDialog] = useState(false);
 
+    // 予約実行
     const handleOnSubmit = (
         targetDate: Date,
         timeStr: string,
@@ -32,13 +38,25 @@ const ScheduleBoard: React.FC<Props> = (props): React.ReactNode => {
         userName: string,
         phoneNumber: string
     ): void => {
-        // 予約実行
         props.onSubmit(
             targetDate,
             timeStr,
             facilityIndex,
             userName,
             phoneNumber
+        );
+    }
+
+    // 取り消し実行
+    const handleOnSubmitCancel = (
+        targetDate: Date,
+        timeStr: string,
+        facilityIndex: number
+    ): void => {
+        props.onSubmitCancel(
+            targetDate,
+            timeStr,
+            facilityIndex
         );
     }
 
@@ -74,6 +92,7 @@ const ScheduleBoard: React.FC<Props> = (props): React.ReactNode => {
                 isAdmin={props.isAdmin}
                 curDate={props.curDate}
                 onSubmit={handleOnSubmit}
+                onSubmitCancel={handleOnSubmitCancel}
             />
             <AdminPassDialog
                 open={openAdminPassDialog}

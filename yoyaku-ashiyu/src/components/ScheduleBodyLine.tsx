@@ -6,6 +6,7 @@ interface Props {
     isAdmin: boolean;
     curDate: Date;
     onSubmit: (timeStr: string, facilityIndex: number, userName: string, phoneNumber: string) => void;
+    onSubmitCancel: (timeStr: string, facilityIndex: number) => void;
 }
 
 const ScheduleBodyLine: React.FC<Props> = (props): React.ReactNode => {
@@ -23,9 +24,13 @@ const ScheduleBodyLine: React.FC<Props> = (props): React.ReactNode => {
         }
     );
 
+    // 予約実行
     const handleOnSubmit = (facilityIndex: number, userName: string, phoneNumber: string): void => {
-        // 予約実行
         props.onSubmit(props.rowData[1], facilityIndex, userName, phoneNumber);
+    }
+    // 予約取り消し
+    const handleOnSubmitCancel = (facilityIndex: number): void => {
+        props.onSubmitCancel(props.rowData[1], facilityIndex);
     }
 
     return (
@@ -43,6 +48,7 @@ const ScheduleBodyLine: React.FC<Props> = (props): React.ReactNode => {
                         bookingTime={props.rowData[1]}
                         facilityIndex={i}
                         onSubmit={handleOnSubmit}
+                        onSubmitCancelBooking={handleOnSubmitCancel}
                     />
                 )}
             </div>

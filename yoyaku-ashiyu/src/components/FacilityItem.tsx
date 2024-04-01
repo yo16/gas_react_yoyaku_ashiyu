@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 
 import { BookButton } from "./BookButton";
 import { BookingDialog } from "./BookingDialog";
+import { BookingEditDialog } from "./BookingEditDialog";
 import { FASILITIES } from "./ScheduleHeader";
 import {COOKIE_USERNAME, COOKIE_PHONENUMBER } from "../App";
 
@@ -20,30 +21,57 @@ interface Props {
     bookingTime: string;
     facilityIndex: number;
     onSubmit: (facilityIndex: number, userName: string, phoneNumber: string) => void;
+    onSubmitCancelBooking: (facilityIndex: number) => void;
 }
 
 const FacilityItem: React.FC<Props> = (props): React.ReactNode => {
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openBookingDialog, setOpenBookingDialog] = useState(false);
+    const [openBookingEditDialog, setOpenBookingEditDialog] = useState(false);
     const [cookies] = useCookies([COOKIE_USERNAME, COOKIE_PHONENUMBER]);
 
+    // 予約登録ボタン
     const handleOnBookBtnClick = () => {
-        setOpenDialog(true);
+        setOpenBookingDialog(true);
     };
-
-    const handleOnClose = () => {
-        setOpenDialog(false);
+    // 予約登録画面クローズ
+    const handleOnCloseBookingDialog = () => {
+        setOpenBookingDialog(false);
     }
-
-    const handleOnEditBtnClick = () => {
-        console.log("編集！");
-    }
-
-    const handleOnSubmit = (userName: string, phoneNumber: string): void => {
+    // 予約登録実施
+    const handleOnSubmitBooking = (userName: string, phoneNumber: string): void => {
         // ダイアログを閉じる
-        setOpenDialog(false);
+        setOpenBookingDialog(false);
 
         // 予約実行
         props.onSubmit(props.info.index, userName, phoneNumber);
+    }
+
+    // 編集ボタン
+    const handleOnEditBtnClick = () => {
+        setOpenBookingEditDialog(true);
+    }
+    // 編集画面クローズ
+    const handleOnCloseEditBtnClick = () => {
+        setOpenBookingEditDialog(false);
+    }
+    // 編集実施
+    const handleOnSubmitEditBooking = (userName: string, phoneNumber: string): void => {
+        // 編集ダイアログを閉じる
+        setOpenBookingEditDialog(false);
+
+        // 編集実行（予約と同じ）
+        props.onSubmit(props.info.index, userName, phoneNumber);
+    }
+    // 取り消し実施
+    const handleOnCancelBooking = (): void => {
+        // 取り消しは、確認する
+        if (window.confirm("予約を取り消してもいいですか？")){
+            // ダイアログを閉じる
+            setOpenBookingEditDialog(false);
+
+            // 取り消し実行
+            props.onSubmitCancelBooking(props.info.index);
+        }
     }
 
     // クッキーのuserName、phoneNumberを取得
@@ -99,12 +127,23 @@ const FacilityItem: React.FC<Props> = (props): React.ReactNode => {
                 { dispItem }
             </div>
             <BookingDialog
-                open={openDialog}
-                onClose={handleOnClose}
+                open={openBookingDialog}
+                onClose={handleOnCloseBookingDialog}
                 bookingDate={props.curDate}
                 bookingTime={props.bookingTime}
                 facilityName={FASILITIES[props.facilityIndex]}
-                onSubmit={handleOnSubmit}
+                onSubmit={handleOnSubmitBooking}
+            />
+            <BookingEditDialog
+                bookingDate={props.curDate}
+                bookingTime={props.bookingTime}
+                facilityName={FASILITIES[props.facilityIndex]}
+                userName={props.info.userName}
+                phoneNumber={props.info.phoneNumber}
+                open={openBookingEditDialog}
+                onClose={handleOnCloseEditBtnClick}
+                onSubmit={handleOnSubmitEditBooking}
+                onCancelBooking={handleOnCancelBooking}
             />
         </>
     );
