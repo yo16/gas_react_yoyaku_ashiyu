@@ -39,3 +39,10 @@
 .linkChangeDt:hover {
     background-color: #eec;
 }
+.divIsAdmin {
+    padding: 3px 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    background-color: #e66;
+    color: #fee;
+}

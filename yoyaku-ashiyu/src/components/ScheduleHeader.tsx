@@ -10,6 +10,7 @@ const FASILITIES = ['A', 'B', 'C', 'D'];
 interface Props {
     curDate: Date;
     setTableDate: (dt: Date) => void;
+    isAdmin: boolean;
 }
 
 const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
@@ -29,6 +30,11 @@ const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
                 <div
                     onClick={handleOnClickTitle}
                 >今日は{ formatDtAsMMDD(new Date()) }</div>
+                {props.isAdmin &&
+                    <div
+                        className="divIsAdmin"
+                    >管理者として表示中</div>
+                }
             </div>
 
             <hr />

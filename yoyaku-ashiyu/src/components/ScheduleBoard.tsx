@@ -86,6 +86,7 @@ const ScheduleBoard: React.FC<Props> = (props): React.ReactNode => {
             <ScheduleHeader
                 curDate={props.curDate}
                 setTableDate={props.setTableDate}
+                isAdmin={props.isAdmin}
             />
             <ScheduleBody
                 timeTable={props.timeTable}
