@@ -1,7 +1,9 @@
 import { formatDtAsMMDD, formatDtAsyyyymmdd } from '../common/dateTool';
+import { useCookies } from 'react-cookie';
 
 import { TimeHeader } from "./TimeHeader";
 import { FacilityHeader } from "./FacilityHeader";
+import {COOKIE_USERNAME, COOKIE_PHONENUMBER } from "../App";
 
 import "./ScheduleHeader.css";
 
@@ -14,9 +16,17 @@ interface Props {
 }
 
 const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
+    const [cookies] = useCookies([COOKIE_USERNAME, COOKIE_PHONENUMBER]);
     const handleOnClickTitle = () => {
         props.setTableDate(new Date());
     };
+
+    const cookieUserName = cookies[COOKIE_USERNAME]
+        ? cookies[COOKIE_USERNAME].length > 0
+            ? `${cookies[COOKIE_USERNAME]} 様`
+            : ""
+        : ""
+    ;
 
     return (
         <div
@@ -35,6 +45,9 @@ const ScheduleHeader: React.FC<Props> = (props): React.ReactNode => {
                         className="divIsAdmin"
                     >管理者として表示中</div>
                 }
+                <div
+                    className="cookieUserName"
+                >{cookieUserName}</div>
             </div>
 
             <hr />
