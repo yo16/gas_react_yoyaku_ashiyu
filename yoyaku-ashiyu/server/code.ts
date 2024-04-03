@@ -129,6 +129,10 @@ function getMonthlySeet(year: number, month: number) {
       .setBorder(null, true, null, null, null, null);
   }
 
+  // 列の書式を「書式なしテキスト」に設定
+  sh.getRange(4, 3, timetableCount * daysCount, 3 * facilityCount)
+    .setNumberFormat('@');
+
   return sh;
 }
 
